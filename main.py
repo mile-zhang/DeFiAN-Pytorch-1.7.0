@@ -10,15 +10,15 @@ import torchvision.transforms as transforms
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from torch.utils.tensorboard import SummaryWriter
 from torch.autograd import Variable
-import data.common as common
+import common #new  import data.common as common -> import common
 from option import args
-from data import data
+# from data import Data #new  from data import data -> from data import Data
 from flops_counter import get_model_complexity_info
 from tqdm import tqdm
 
 def main():
     global opt, model, normalize, unnormalize
-    opt = utils.print_args(args)
+    opt = utils.print_args(args) 
 
     # RGB mean for ImageNet
     normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -112,6 +112,9 @@ def main():
 
         for i in range(len(opt.data_test)):
             valid_path = opt.dir_data + 'Test/' + opt.data_test[i]
+            print("---------valid_path-------------")
+            print(len(opt.data_test))
+            print(opt.data_test[i])
             validation(valid_path, model, opt.best_epoch)
         torch.cuda.empty_cache()
 
@@ -168,7 +171,7 @@ def validation(valid_path, model, epoch):
             for idx_img in range(length):
                 img_name = file[idx_img].split('.png')[0]
                 HR_img = imageio.imread(valid_path + '/' + img_name + '.png')
-                HR_img = common.set_channel(HR_img, opt.n_colors)
+                HR_img = common.set_channel(HR_img, opt.n_colors) #add opt.n_channels
                 HR_img = common.np2Tensor(HR_img, opt.rgb_range)
 
                 HR_img = Variable(HR_img, volatile=False).view(1, HR_img.shape[0], HR_img.shape[1], HR_img.shape[2])

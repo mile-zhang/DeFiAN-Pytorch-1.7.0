@@ -215,7 +215,7 @@ def load_checkpoint(resume, n_GPUs, model, is_cuda=True):
                     # if k[:7] != 'upscale':
                     #     new_checkpoint[k] = v
                     new_checkpoint[k] = v
-        model.load_state_dict(new_checkpoint)
+        model.load_state_dict(new_checkpoint,False) # -> add False
     else:
         print("===> no checkpoint found at '{}'".format(resume))
         start_epoch = 1

@@ -4,7 +4,7 @@ import torch.nn as nn
 parser = argparse.ArgumentParser(description='DeFiAN')
 
 # Hardware specifications
-parser.add_argument("--cuda", default=False, action="store_true", help="Use cuda?")
+parser.add_argument("--cuda", default=True, action="store_true", help="Use cuda?")
 parser.add_argument('--n_GPUs', type=int, default=1, help='parallel training with multiple GPUs')
 parser.add_argument('--GPU_ID', type=int, default=0, help='GPU ID')
 parser.add_argument('--threads', type=int, default=4, help='number of threads for data loading')
@@ -32,7 +32,7 @@ parser.add_argument('--n_channels', type=int, default=32, help='number of channe
 parser.add_argument('--activation', default=nn.ReLU(inplace=True), help='activation function')
 
 # Training specifications
-parser.add_argument("--train", default=True, action="store_true", help="True for training, False for testing")
+parser.add_argument("--train", default=False, action="store_true", help="True for training, False for testing")
 parser.add_argument("--preload", default=True, action="store_true", help="Pre-load the pretrained checkpoints")
 parser.add_argument('--iter_epoch', type=int, default=2000, help='iteration in each epoch')
 parser.add_argument("--start_epoch", default=0, type=int, help="start epoch for training")
