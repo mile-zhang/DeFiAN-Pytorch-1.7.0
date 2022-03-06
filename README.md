@@ -43,7 +43,7 @@ Yuanfei Huang, Jie Li, Xinbo Gao*, Yanting Hu and Wen Lu, "Interpretable Detail-
 
 3. Set the configuration '--train' in 'option.py' as 'True', and other configurations as you want.
 
-4. If you want to use GPU, Set the configuration '--train' in 'option.py' as 'True'
+4. If you want to use GPU, Set the configuration '--cuda' in 'option.py' as 'True'
 
 5. run 'main.py'.
 ## Test
@@ -54,7 +54,7 @@ Yuanfei Huang, Jie Li, Xinbo Gao*, Yanting Hu and Wen Lu, "Interpretable Detail-
 
 3. Set the configuration '--train' in 'option.py' as 'False'
 
-4. If you want to use GPU, Set the configuration '--train' in 'option.py' as 'True'
+4. If you want to use GPU, Set the configuration '--cuda' in 'option.py' as 'True'
 
 5. run 'main.py'.
 
