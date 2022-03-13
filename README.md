@@ -64,19 +64,7 @@ Yuanfei Huang, Jie Li, Xinbo Gao*, Yanting Hu and Wen Lu, "Interpretable Detail-
 python main.py --cuda --dir_data /home/mile/dataset/
 
 # DeFiAN_L x2 
-python main.py 
-
-# DeFiAN_s x3 
-python main.py 
-
-# DeFiAN_L x3 
-python main.py 
-
-# DeFiAN_s x4  
-python main.py 
-
-# DeFiAN_L x4
-python main.py  
+python main.py --cuda --n_modules 10 --n_blocks 20 --n_channels 64 --dir_data /home/mile/dataset/
 ```
 
 ## Results
