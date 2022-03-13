@@ -197,8 +197,12 @@ def validation(valid_path, model, epoch):
                 else:
                     SR_img = SR_img.data[0]
                     HR_img = HR_img.data[0]
+                PSNR_f = utils.calc_PSNR(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale']) #new add
+                SSIM_f = utils.calc_SSIM(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale']) #new add
                 PSNR += utils.calc_PSNR(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale'])
                 SSIM += utils.calc_SSIM(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale']) #new add
+                print(img_name,"：") #new add
+                print("PSNR：",PSNR_f,"SSIM：",SSIM_f) #new add
                 count = count + 1
 
                 if not opt.train:
