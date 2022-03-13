@@ -57,10 +57,10 @@ Yuanfei Huang, Jie Li, Xinbo Gao*, Yanting Hu and Wen Lu, "Interpretable Detail-
 4. If you want to use GPU, Set the configuration '--cuda' in 'option.py' as 'True'
 
 5. If you want to test in other dataset, modify --data_test in 'option.py' as you want 
-  (ex --data_test', type=str, default=['Set14'])
+  <br/>(ex --data_test', type=str, default=['Set14'])
 
 6. If you want to test in other scale, modify --degrad in 'option.py' as you want
-  (ex --degrad', type=str,  default={'SR_scale': 4, 'B_kernel': False, 'B_sigma': 0, 'N_noise': False, 'N_sigma': 0})
+  <br/>(ex --degrad', type=str,  default={'SR_scale': 4, 'B_kernel': False, 'B_sigma': 0, 'N_noise': False, 'N_sigma': 0})
 
 7. run 'main.py'.
 
