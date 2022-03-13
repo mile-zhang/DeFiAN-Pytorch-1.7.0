@@ -23,7 +23,7 @@ Yuanfei Huang, Jie Li, Xinbo Gao*, Yanting Hu and Wen Lu, "Interpretable Detail-
 
 1. Python==3.8.6
 
-2. PyTorch==1.7.0
+2. PyTorch==1.7.02
 
 3. torchvision==0.8.0
 
