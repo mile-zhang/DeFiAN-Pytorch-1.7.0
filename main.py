@@ -87,7 +87,7 @@ def main():
             utils.save_checkpoint(model, epoch, opt.model_path + '/SR_Model')
             for i in range(len(opt.data_test)):
                 valid_path = opt.dir_data + 'Test/' + opt.data_test[i]
-                PSNR = validation(valid_path, model, epoch)
+                PSNR =(valid_path, model, epoch)
                 writer.add_scalar(opt.degrad_name + '-PSNR/' + str(opt.data_test[i]), PSNR, epoch)
             torch.cuda.empty_cache()
             scheduler.step()
@@ -128,6 +128,7 @@ def train(training_dataloader, optimizer, model, epoch, writer):
             if niter % 200 == 0:
                 img_path = opt.dir_data + '/Test/Set5/butterfly.png'
                 PSNR = validation_image(img_path, model, niter, writer)
+                SSIM = validation_image(img_path, model, niter, writer) # new add 
             model.train()
             # ----------------------Preparing degraded LR images------------------------
             prepro = degradation.SRMDPreprocessing(opt.degrad['SR_scale'], random=False,
@@ -153,6 +154,7 @@ def train(training_dataloader, optimizer, model, epoch, writer):
                              LearnRate=optimizer.param_groups[0]["lr"],
                              Loss='%.4f' % loss,
                              PSNR_Img='%.3f' % PSNR,
+                             SSIm_Img='%.3f' % SSIM, #new add
                              )
             if (niter + 1) % 50 == 0:
                 writer.add_scalar('Train/SR_loss', loss, niter)
@@ -162,6 +164,7 @@ def validation(valid_path, model, epoch):
     model.eval()
     count = 0
     PSNR = 0
+    SSIM = 0 #new add 
 
     file = os.listdir(valid_path)
     file.sort()
@@ -195,6 +198,7 @@ def validation(valid_path, model, epoch):
                     SR_img = SR_img.data[0]
                     HR_img = HR_img.data[0]
                 PSNR += utils.calc_PSNR(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale'])
+                SSIM += utils.calc_SSIM(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale']) #new add
                 count = count + 1
 
                 if not opt.train:
@@ -209,14 +213,16 @@ def validation(valid_path, model, epoch):
                     result.save(SR_path + '/' + img_name + '.png')
 
                 Avg_PSNR = PSNR / count
+                Avg_SSIM = SSIM / count #new add
                 time.sleep(0.01)
                 pbar.update(1)
                 pbar.set_postfix(Degrad=opt.degrad_name,
                                  Epoch=epoch,
-                                 PSNR='%.4f' % Avg_PSNR)
+                                 PSNR='%.4f' % Avg_PSNR,
+                                 SSIM='%.4f' % Avg_SSIM) #new add SSIM='%.4f' % Avg_SSIM
     torch.cuda.empty_cache()
 
-    return Avg_PSNR
+    return Avg_PSNR,Avg_SSIM
 
 def validation_image(valid_path, model, niter, writer):
     model.eval()
@@ -248,12 +254,13 @@ def validation_image(valid_path, model, niter, writer):
             SR_img = SR_img.data[0]
             HR_img = HR_img.data[0]
         PSNR = utils.calc_PSNR(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale'])
+        SSIM = utils.calc_SSIM(SR_img, HR_img, rgb_range=opt.rgb_range, shave=opt.degrad['SR_scale']) #new add
     writer.add_image(opt.degrad_name + '/SR', SR_img.clamp(0, 1).numpy(), niter)
     writer.add_image(opt.degrad_name + '/LR', LR_img.clamp(0, 1).numpy(), niter)
     writer.add_image(opt.degrad_name + '/HR', HR_img.clamp(0, 1).numpy(), niter)
     torch.cuda.empty_cache()
 
-    return PSNR
+    return PSNR,SSIM
 
 if __name__ == "__main__":
     main()
